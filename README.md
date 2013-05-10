@@ -6,9 +6,11 @@ App Jangle - Hello World - Bob Danani
 Task 1 - 3 = DONE
 
 Task 4: Had some issues
-Using the Link created in task 3 (EnhancedHello-appJangle project),
-I then tried to retrieve the corresponding translation values based on the language input.
-These are my attempt for the task 4:
+
+I tried to retrieve the corresponding translation values based on the language input, 
+using the Link created in task 3 (EnhancedHello-appJangle project).
+
+I implemented it as follow:
 
 System.out.println("ATTEMPT 1 \n GETTING THE VALUE MANUALLY - this works, but I guess it is not efficient");
 System.out.println("String val1 = session.node(linkmaps.get(LANG1)).get().value().toString();");
@@ -24,8 +26,8 @@ System.out.println(LANG2 + " = " + val2);
         
         
 System.out.println("\nATTEMPT 2 ");
-System.out.println("GETTING ALL TRANSLATIONS USING selectAll \n" + 
-     "But do we really to fetch all the translations records just to select the one that we are interested?");
+System.out.println("RETRIEVING ALL TRANSLATIONS USING selectAll \n" + 
+     "But do we really to retrieve all the translations records just to select the one that we are interested?");
 System.out.println("ListQuery all = session.node(translationsURL).selectAll();");
 System.out.println("System.out.println(all.get().values().toString());\n");
 ListQuery all = session.node(translationsURL).selectAll();
