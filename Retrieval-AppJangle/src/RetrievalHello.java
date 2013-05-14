@@ -10,7 +10,7 @@ import io.nextweb.jre.Nextweb;
 public class RetrievalHello {
 
     public static void main(String[] args) {
-        Session session = Nextweb.createSession();
+        Session session = Nextweb.createSession(); 
         final String LANG1 = "Portuguese";
         final String LANG2 = "German";
         
