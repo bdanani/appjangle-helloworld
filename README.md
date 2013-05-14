@@ -3,34 +3,79 @@ appjangle-helloworld
 
 App Jangle - Hello World - Bob Danani
 
-Task 1 - 3 = DONE
+1. Hello - App Jange
+Directory: hello-appjangle
+Screenshot: appjangle_screenshot_1.png
 
-Task 4: Had some issues
+Codes: 
+	Session session = Nextweb.createSession();
+	Query hello = session.seed().append("Hello, Java!");
+	System.out.println("Created:\n"+hello.get());
+	session.close().get();
 
-I tried to retrieve the corresponding translation values based on the language input, 
-using the Link created in task 3 (EnhancedHello-appJangle project).
+2. Enhanced Hello - App Jange
+Directory: enhancedhello-appjangle
+Screenshot: appjangle_screenshot_2.png
 
-I implemented it as follow:
+Codes:
+ 	Query seed = session.seed();
+        Query translations = seed.append("translations");
+        
+        //creating the types
+        Query aTranslation  = seed.append("A translation of hello in a unique language", "./aTranslation");
+        Query aLanguageName = seed.append("Language name for the translation", "./aLanguage");
+        
+        //creating translation nodes (t1, t2, t3, t4, t5)
+        Query t1 = translations.append("Hello World");
+        Query t2 = translations.append("Halo Dunia");
+        Query t3 = translations.append("Ola Mundo");
+        Query t4 = translations.append("Bonjour tout le monde");
+        Query t5 = translations.append("Hallo Welt");
+        t1.append(aTranslation);
+        t2.append(aTranslation);
+        t3.append(aTranslation);
+        t4.append(aTranslation);
+        t5.append(aTranslation);
+        
+        //initialising the language attribute for each translation object
+        t1.append("English").append(aLanguageName);
+        t2.append("Indonesian").append(aLanguageName);
+        t3.append("Portuguese").append(aLanguageName);
+        t4.append("French").append(aLanguageName);
+        t5.append("German").append(aLanguageName);
+   
+        session.commit().get();
 
-System.out.println("ATTEMPT 1 \n GETTING THE VALUE MANUALLY - this works, but I guess it is not efficient");
-System.out.println("String val1 = session.node(linkmaps.get(LANG1)).get().value().toString();");
-System.out.println("String val2 = session.node(linkmaps.get(LANG2)).get().value().toString();");
-System.out.println("System.out.println(LANG1 + \" = \" + val1);");
-System.out.println("System.out.println(LANG2 + \" = \" + val2);\n");
+3. Retrieval Hello - App Jange
+Directory: Retrieval-AppJangle
+Screenshot: appjangle_screenshot_3.png
+
+Codes:
+	Session session = Nextweb.createSession(); 
+        final String LANG1 = "Portuguese";
+        final String LANG2 = "German";
         
-String val1 = session.node(linkmaps.get(LANG1)).get().value().toString();
-String val2 = session.node(linkmaps.get(LANG2)).get().value().toString();
-System.out.println(LANG1 + " = " + val1);
-System.out.println(LANG2 + " = " + val2);
+        final String translationsURL = "http://slicnet.com/seed1/seed1/6/2/4/4/h/sd/transla1";
+        Link aLanguage = session.node("http://slicnet.com/seed1/seed1/6/2/4/4/h/sd/aLanguage");
+	ListQuery all = session.node(translationsURL).selectAll();
         
-        
-        
-System.out.println("\nATTEMPT 2 ");
-System.out.println("RETRIEVING ALL TRANSLATIONS USING selectAll \n" + 
-     "But do we really to retrieve all the translations records just to select the one that we are interested?");
-System.out.println("ListQuery all = session.node(translationsURL).selectAll();");
-System.out.println("System.out.println(all.get().values().toString());\n");
-ListQuery all = session.node(translationsURL).selectAll();
-System.out.println(all.get().values().toString());
-System.out.println("For some reason the above line will only work and print out all the translation values if I uncomment all the codes in the ATTEMPT1 section - not sure why");
-        
+        for (int i = 0; i < all.get().size(); ++i){
+        	Node n = all.get().get(i);
+        	Query q = n.select(aLanguage);
+        	String language = q.get().value().toString();
+        	if (language.equals(LANG1))
+        		System.out.println("Translation of Hello World in " 
+			+ language +  " = " + n.value());
+        	else if (language.equals(LANG2))
+        		System.out.println("Translation of Hello World in " 
+			+ language +  " = " + n.value());
+        }
+       
+        session.close().get();
+
+
+4. DATA MODEL
+See the following files:
+Data Model file: DataModel_Translations.png
+Data Model Image Generator (using draw.io web application): DataModel_draw_io.xml
+
